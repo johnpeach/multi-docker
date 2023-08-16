@@ -1,0 +1,18 @@
+language: generic
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker built -t johnppeach/react-test -f ./client/Dockerfile.dev ./client
+
+scripts:
+  - docker run -e CI=true johnppeach/react-test npm test
+
+after_success:
+  - docker build -t johnppeaach/multi-client ./client
+  - docker build -t johnppeach/multi-nginx ./nginx
+  - docker build -t johnppeach/multi-server ./server
+  - docker build -t johnppeach/multi-worker ./worker
+
+
