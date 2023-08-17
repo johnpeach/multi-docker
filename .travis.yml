@@ -14,5 +14,10 @@ after_success:
   - docker build -t johnppeach/multi-nginx ./nginx
   - docker build -t johnppeach/multi-server ./server
   - docker build -t johnppeach/multi-worker ./worker
-
-
+  # Log in to docker CLI
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  # Take those images and push them to docker hub
+  - docker push johnppeaach/multi-client
+  - docker push johnppeach/multi-nginx
+  - docker push johnppeach/multi-server
+  - docker push johnppeach/multi-worker
